@@ -1,0 +1,33 @@
+name: Hourly File Commit
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  create_commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set Time Variables
+        run: |
+          echo "NOW=$(date +'%d-%m-%Y_%H-%M')" >> $GITHUB_ENV
+
+      - name: Create New File
+        run: |
+          touch "${{ env.NOW }}.txt"
+          echo "File created at $(date)" > "${{ env.NOW }}.txt"
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "Vikas Verma"
+          git config --global user.email "mail@vikas.cc"
+          git add .
+          git commit -m "Add file ${{ env.NOW }}.txt" || exit 0
+          git push
