@@ -34,11 +34,11 @@ jobs:
           echo "Random number is $RANDOM_NUM"
           if (( RANDOM_NUM % 2 == 0 )); then
             echo "Random number $RANDOM_NUM is divisible by 2, committing changes..."
-            git config --global user.name "Vikas Verma"
-            git config --global user.email "mail@vikas.cc"
+            git config --global user.name "Surakat Gideon"
+            git config --global user.email "suraktg@gmail.com"
             git add .
             git commit -m "Add file ${{ env.NOW }}.txt" || exit 0
-            git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/geekvikas/keep-me-alive.git main
+            git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/lordhynet/projectx.git main
           else
             echo "Random number $RANDOM_NUM is not divisible by 2, skipping commit."
           fi
